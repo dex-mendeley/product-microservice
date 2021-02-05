@@ -1,4 +1,4 @@
-package com.mendeley.test.productmicroservice;
+package com.mendeley.test.product_microservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,5 +1,7 @@
-package com.mendeley.test.productmicroservice;
+package com.mendeley.test.product_microservice;
 
+import com.mendeley.test.product_microservice.model.Book;
+import com.mendeley.test.product_microservice.repository.BookRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
