@@ -5,26 +5,34 @@ import com.mendeley.test.product_microservice.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.parser.Entity;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/books")
 public class BookController {
 
     @Autowired
     BookRepository bookRepository;
 
-    @PostMapping("/books")
+    @PostMapping()
     public ResponseEntity<Book> addBook(@RequestBody Book book ){
         ResponseEntity entity;
+        Optional<Book> opt = Optional.ofNullable(book);
 
-        Book savedBook = bookRepository.save(book);
+        try {
+            if (opt.isPresent()) {
+                Book savedBook = bookRepository.save(opt.get());
+                entity = new ResponseEntity(savedBook, HttpStatus.OK);
+            } else {
+                entity = new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
 
-        entity = new ResponseEntity(savedBook, HttpStatus.OK);
-
+        } catch (Exception e) {
+            entity = new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return entity;
     }
+
 }

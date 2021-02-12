@@ -38,9 +38,28 @@ public class BookControllerTest {
         when(repository.save(noISBN)).thenReturn(testBook);
 
         mockMvc.perform(post("/books")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(noISBN))
-                ).andExpect(status().isOk())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(noISBN))
+        ).andExpect(status().isOk())
                 .andExpect(content().string(objectMapper.writeValueAsString(testBook)));
     }
+
+    @Test
+    public void testDatabaseError() throws Exception {
+        when(repository.save(noISBN)).thenThrow(new RuntimeException("Something went wrong"));
+
+        mockMvc.perform(post("/books")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(noISBN))
+        ).andExpect(status().isInternalServerError());
+
     }
+
+    @Test
+    public void testBadRequest() throws Exception {
+        mockMvc.perform(post("/books")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isBadRequest());
+    }
+
+}
