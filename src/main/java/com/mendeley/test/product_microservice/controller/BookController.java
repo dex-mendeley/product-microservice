@@ -90,6 +90,14 @@ public class BookController {
                 savedBook.setAuthor_last(bookUpdate.getAuthor_last());
             }
 
+            if(bookUpdate.getPrice() != null) {
+                savedBook.setPrice(bookUpdate.getPrice());
+            }
+
+            if(bookUpdate.getImg_url() != null) {
+                savedBook.setImg_url(bookUpdate.getImg_url());
+            }
+
             bookRepository.save(savedBook);
             return new ResponseEntity(savedBook, HttpStatus.OK);
         } else {

@@ -34,9 +34,9 @@ public class BookControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    Book testBook = new Book("mock_isbn", "test_title", "test_firstName", "test_lastName");
-    Book testBook2 = new Book("mock_isbn_2", "Second title", "Brown", "Dan");
-    Book noISBN = new Book("test_title", "test_firstName", "test_lastName");
+    Book testBook = new Book("mock_isbn", "test_title", "test_firstName", "test_lastName", 2.45, "foobar");
+    Book testBook2 = new Book("mock_isbn_2", "Second title", "Brown", "Dan", 3.60, "barbaz");
+    Book noISBN = new Book("test_title", "test_firstName", "test_lastName", 5.45, "foobarbaz");
 
     @Test
     public void testAddBook() throws Exception {
@@ -112,8 +112,8 @@ public class BookControllerTest {
 
     @Test
     public void updateBook() throws Exception {
-        Book updatedBook = new Book("mock_isbn", "updated_title", "test_firstName", "test_lastName");
-        Book update = new Book("mock_isbn", "updated_title", null, null);
+        Book updatedBook = new Book("mock_isbn", "updated_title", "test_firstName", "test_lastName", 3.45, "foobar" );
+        Book update = new Book("mock_isbn", "updated_title", null, null, null, null);
 
         when(repository.findById("mock_isbn")).thenReturn(Optional.ofNullable(updatedBook));
 
