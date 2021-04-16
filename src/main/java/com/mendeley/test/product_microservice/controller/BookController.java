@@ -72,35 +72,26 @@ public class BookController {
     }
 
     @PatchMapping()
-    public ResponseEntity<Book> updatedBook(@RequestBody Book book) {
+    public ResponseEntity<Book> updatedBook(@RequestBody Book bookUpdate) {
         ResponseEntity entity;
 
-        Optional<Book> opt = bookRepository.findById(book.getIsbn());
+        Optional<Book> opt = bookRepository.findById(bookUpdate.getIsbn());
         if(opt.isPresent()) {
-            Book updatedBook = new Book();
             Book savedBook = opt.get();
-
-            updatedBook.setIsbn(book.getIsbn());
-
-            if(book.getTitle() != null) {
-                updatedBook.setTitle(book.getTitle());
-            } else {
-                updatedBook.setTitle(savedBook.getTitle());
+            if(bookUpdate.getTitle() != null) {
+                savedBook.setTitle(bookUpdate.getTitle());
             }
 
-            if(book.getAuthor_first() != null) {
-                updatedBook.setAuthor_first(book.getAuthor_first());
-            } else {
-                updatedBook.setAuthor_first(savedBook.getAuthor_first());
+            if(bookUpdate.getAuthor_first() != null) {
+                savedBook.setAuthor_first(bookUpdate.getAuthor_first());
             }
 
-            if(book.getAuthor_last() != null) {
-                updatedBook.setAuthor_last(book.getAuthor_last());
-            } else {
-                updatedBook.setAuthor_last(savedBook.getAuthor_last());
+            if(bookUpdate.getAuthor_last() != null) {
+                savedBook.setAuthor_last(bookUpdate.getAuthor_last());
             }
 
-            return new ResponseEntity(updatedBook, HttpStatus.OK);
+            bookRepository.save(savedBook);
+            return new ResponseEntity(savedBook, HttpStatus.OK);
         } else {
             return null;
         }
