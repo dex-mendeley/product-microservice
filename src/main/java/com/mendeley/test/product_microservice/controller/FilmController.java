@@ -60,15 +60,15 @@ public class FilmController {
         return entity;
     }
 
-    @DeleteMapping("/{film_id}")
-    public ResponseEntity<Book> deletefilm(@PathVariable String isbn) {
+    @DeleteMapping("/{filmId}")
+    public ResponseEntity<Book> deleteFilm(@PathVariable String filmId) {
         ResponseEntity entity;
 
         try {
-            Optional<Film> opt = filmRepository.findById(isbn);
+            Optional<Film> opt = filmRepository.findById(filmId);
 
             if (opt.isPresent()) {
-                filmRepository.deleteById(isbn);
+                filmRepository.deleteById(filmId);
                 entity = new ResponseEntity(HttpStatus.OK);
             } else {
                 entity = new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -82,7 +82,7 @@ public class FilmController {
     }
 
         @PatchMapping()
-        public ResponseEntity<Film> updatdeFilm(@RequestBody Film filmUpdate) {
+        public ResponseEntity<Film> updatedFilm(@RequestBody Film filmUpdate) {
             ResponseEntity entity;
 
             Optional<Film> opt = filmRepository.findById(filmUpdate.getFilm_id());
