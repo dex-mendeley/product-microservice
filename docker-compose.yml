@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo
+    networks:
+      - database_network
+    volumes:
+    - db_data:/data/db
+
+  product-microservice:
+    build: .
+    networks:
+      - database_network
+    ports:
+      - 7500:7500
+
+
+
+networks:
+  database_network: {}
+
+volumes:
+  db_data: {}
